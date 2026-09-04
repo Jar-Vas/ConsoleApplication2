@@ -140,6 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleApplication2.cpp" />
+    <ClCompile Include="Reservoir.cpp" />
+    <ClCompile Include="Reservoirs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Reservoir.h" />
+    <ClInclude Include="Reservoirs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,91 +2,10 @@
 //
 
 #include <iostream>
+#include <fstream>
+#include "Reservoir.h"
 using namespace std;
-class Reservoir {
-private:
-    string name;
-    string type;
-    double height;
-    double width;
-    double depth;
-public:
-    Reservoir(string _name, string _type, double _height, double _width, double _depth) {
-        name = _name;
-        type = _type;
-        height = _height;
-        width = _width;
-        depth = _depth;
-    }
-    Reservoir(const Reservoir& other) {
-        name = other.name;
-        type = other.type;
-        height = other.height;
-        width = other.width;
-        depth = other.depth;
-    }
-    Reservoir() {
-        name = "";
-        type = "";
-        height = 0.0;
-        width = 0.0;
-        depth = 0.0;
-    }
-
-    string get_name() const{
-        return name;
-    }
-    string get_type() const {
-        return type;
-    }
-    double get_height() const {
-        return height;
-    }
-    double get_width() const {
-        return width;
-    }
-    double get_depth() const {
-        return depth;
-    }
-
-    void set_name(string _name) {
-        name = _name;
-    }
-    void set_type(string _type) {
-        type = _type;
-    }
-    void set_height(double _height) {
-        height = _height;
-    }
-    void set_width(double _width) {
-        width = _width;
-    }
-    void set_depth(double _depth) {
-        depth = _depth;
-    }
-
-
-    double volume() const {
-        return height * width * depth;
-    }
-    double perimeter() const {
-        return height * width;
-    }
-    bool is_equal(Reservoir& other) const {
-        return (type == other.type);
-    }
-    void info() const {
-        cout << "Reservoir: " << name << ", type: " << type << ", parameters hXwXd: " << height << "X" << width << "X" << depth << endl;
-    }
-    // 
-    int is_equal_perimeter(Reservoir& other) const {
-        if (is_equal(other)){
-            return (1 - (perimeter() == other.perimeter())) * ((perimeter() > other.perimeter())*2-1); // True => 1 => 2-1 => 1; False => 0 => 0-1 => -1. (0, 1) -> (-1, 1)
-        }
-        return 0;
-    }
-};
-
+/*
 class Reservoirs {
 private:
     int size;
@@ -96,7 +15,7 @@ public:
     Reservoirs(int _size, const Reservoir* _arrayy) {
         capacity = (int)(_size * 1.5 + 1);
         size = _size;
-        Reservoir* arrayy = new Reservoir[capacity];
+        arrayy = new Reservoir[capacity];
         for (int i = 0; i < size; i++) {
             arrayy[i] = _arrayy[i];
         }
@@ -143,8 +62,19 @@ public:
 
     void info() const{
         for (int i = 0; i < size; i++) {
-            cout << "#" << i;
+            cout << "#" << i << ' ';
             arrayy[i].info();
+        }
+    }
+
+    void to_file(const string file_name) const{
+        ofstream file(file_name);
+        if (file.is_open()) {
+            for (int i = 0; i < size; i++) {
+                const Reservoir temp = arrayy[i];
+                file << "#" << i << " Reservoir: " << temp.get_name() << ", type: " << temp.get_type() << ", parameters hXwXd: " << temp.get_height() << "X" << temp.get_width() << "X" << temp.get_depth() << endl;
+            }
+            file.close();
         }
     }
    
@@ -152,11 +82,50 @@ public:
         delete[] arrayy;
     }
 };
-
+*/
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    Reservoir o1("Black Sea", "Sea", 100, 200, 10);
+    cout << o1.volume() << endl;
+    o1.info();
+    cout << o1.perimeter() << endl << endl;
+
+    Reservoir o2("Green Sea", "Sea", 400, 50, 20);
+    cout << o2.volume() << endl;
+    o2.info();
+    cout << o2.perimeter() << endl << endl;
+
+    Reservoir o3("Cinhai", "Lake", 100, 50, 5);
+    cout << o3.volume() << endl;
+    o3.info();
+    cout << o3.perimeter() << endl << endl;
+
+
+
+    cout << o1.is_equal(o2) << endl;
+    cout << o1.is_equal_perimeter(o2) << endl;
+    cout << o1.is_equal(o3) << endl;
+    cout << o1.is_equal_perimeter(o3) << endl;
+    cout << o2.is_equal(o3) << endl;
+    cout << o2.is_equal_perimeter(o3) << endl << endl << endl;
+
+
+    const Reservoir* arrayys = new Reservoir[2]{ o1, o2 };
+
+    Reservoirs s1(2, arrayys);
+    s1.info();
+    cout << endl;
+    s1.add(o3);
+    s1.info();
+    cout << endl;
+    s1.pop(1);
+    s1.info();
+    cout << endl;
+    string file_name = "File.txt";
+    s1.to_file(file_name);
+
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

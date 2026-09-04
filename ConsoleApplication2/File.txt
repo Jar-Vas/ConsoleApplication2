@@ -1,0 +1,2 @@
+#0 Reservoir: Black Sea, type: Sea, parameters hXwXd: 100X200X10
+#1 Reservoir: Cinhai, type: Lake, parameters hXwXd: 100X50X5
