@@ -14,7 +14,7 @@ private:
 public:
     Reservoirs(int _size, const Reservoir* _arrayy);
 
-    void expon(double log = 1.5);
+    void expon(double log);
 
     Reservoir get(int index) const;
 
